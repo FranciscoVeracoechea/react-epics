@@ -1,0 +1,72 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "description": "",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FranciscoVeracoechea/react-epics.git"
+  },
+  "keywords": [
+    "react",
+    "rxjs",
+    "epic",
+    "state-management",
+    "observable",
+    "hooks"
+  ],
+  "author": "Francisco Veracoechea",
+  "homepage": "https://github.com/FranciscoVeracoechea/react-epics#readme",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16",
+    "rxjs": ">= 6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "name": "react-epics",
+  "module": "dist/react-epics.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/react-epics.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/react-epics.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.10.1",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.2",
+    "husky": "^5.1.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "size-limit": "^4.10.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  }
+}
