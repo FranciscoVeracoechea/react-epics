@@ -4,10 +4,6 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "description": "",
-  "files": [
-    "dist",
-    "src"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FranciscoVeracoechea/react-epics.git"
@@ -37,11 +33,6 @@
   "peerDependencies": {
     "react": ">=16",
     "rxjs": ">= 6"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
   },
   "name": "react-epics",
   "module": "dist/react-epics.esm.js",

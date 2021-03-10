@@ -1,6 +1,8 @@
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
+
 import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+
 import { Epic, Action } from './types';
 
 export const useEpic = <Payload, State, Dependencies = {}>(
@@ -13,15 +15,16 @@ export const useEpic = <Payload, State, Dependencies = {}>(
 
   const state$ = useMemo(() => new BehaviorSubject(initialState), []);
   const actions$ = useMemo(() => new Subject<Action<Payload>>(), []);
+  const deps = useMemo(() => (dependecies || {}) as Dependencies, [dependecies]);
 
   const newState$ = useMemo(
     () =>
       epic(
         actions$.asObservable(),
         state$.asObservable(),
-        dependecies as Dependencies,
+        deps,
       ),
-    [actions$, state$, dependecies],
+    [actions$, state$, deps],
   );
 
   const dispatch = useCallback(
@@ -41,7 +44,7 @@ export const useEpic = <Payload, State, Dependencies = {}>(
   useLayoutEffect(() => {
     const sub = newState$
       .pipe(distinctUntilChanged())
-      .subscribe((state) => state$.next(state), setErrorState);
+      .subscribe(state => state$.next(state), setErrorState);
     return () => sub.unsubscribe();
   }, [newState$]);
 

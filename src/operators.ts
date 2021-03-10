@@ -8,7 +8,7 @@ export const mapAction = <T, Payload = unknown>(
   actionType: string,
   mapFn: (action: Action<Payload>) => T,
 ) => {
-  return map<Action<Payload>, T | Action<Payload>>((action) => {
+  return map<Action<Payload>, T | Action<Payload>>(action => {
     return actionType === action.type ? mapFn(action) : action;
   });
 };
