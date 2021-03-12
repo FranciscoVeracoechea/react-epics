@@ -4,7 +4,7 @@ Strongly typed functions as state management using [RxJS](https://rxjs.dev/) for
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/FranciscoVeracoechea/react-epics/blob/master/LICENSE)
 ![Typescript](https://img.shields.io/badge/Typescript-100%25-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/FranciscoVeracoechea/react-epics?color=blue)
-[![npm version](https://badge.fury.io/js/react-epics.svg)](https://badge.fury.io/js/react-epics)
+[![npm version](https://img.shields.io/badge/npm%20version-0.1.2-blue)](https://badge.fury.io/js/react-epics)
 
 ## 🚀 Epics
 
@@ -12,7 +12,7 @@ An **Epic** is a function which takes an stream of actions (```action$```), an s
 
 Once you're inside your Epic, use any Observable patterns you desire as long as any output from the final, returned stream, is the new state.
 
-This idea, which is based on **redux** allow us to use all RxJS awesome abilites in our React components with a simple but powerful API.
+This idea, which is based on **redux** allows us to use all RxJS awesome abilities in our React components with a simple but powerful API.
 
 
 ## 🛠 Installation
@@ -45,7 +45,7 @@ const couterEpic: Epic<Payload, State> = (action$, state$) => {
   const minus$ = action$.pipe(
     ofType('minus'),
     withLatestFrom(state$),
-    map(([action, state]) => ({ counter: state.counter + action.payload }))
+    map(([action, state]) => ({ counter: state.counter - action.payload }))
   );
 
   return merge(plus$, minus$);
@@ -76,7 +76,7 @@ function Counter() {
 
 ### ```useEpic()```
 
-This is a [React hook](https://reactjs.org/docs/hooks-intro.html) that allow us to use RxJS Observables for state management.
+This is a [React hook](https://reactjs.org/docs/hooks-intro.html) that allows us to use RxJS Observables for state management.
 
 ```ts
 type State = {...}
