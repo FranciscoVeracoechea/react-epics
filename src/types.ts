@@ -5,6 +5,8 @@ export type Action<Payload> = {
   payload: Payload;
 };
 
+export type Dispatch<Payload> = (action: Action<Payload>) => void;
+
 export type Action$<P> = Observable<Action<P>>;
 
 export type State$<T> = Observable<T>;

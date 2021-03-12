@@ -3,13 +3,13 @@ import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
-import { Epic, Action } from './types';
+import { Epic, Action, Dispatch } from './types';
 
 export const useEpic = <Payload, State, Dependencies = {}>(
   epic: Epic<Payload, State, Dependencies>,
   initialState: State,
   dependecies?: Dependencies,
-): [State, (action: Action<Payload>) => void, Error | null] => {
+): [State, Dispatch<Payload>, Error | null] => {
   const [state, setState] = useState(initialState);
   const [error, setErrorState] = useState<Error | null>(null);
 
@@ -27,8 +27,8 @@ export const useEpic = <Payload, State, Dependencies = {}>(
     [actions$, state$, deps],
   );
 
-  const dispatch = useCallback(
-    (action: Action<Payload>) => {
+  const dispatch = useCallback<Dispatch<Payload>>(
+    (action) => {
       actions$.next(action);
     },
     [actions$],

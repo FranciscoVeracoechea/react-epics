@@ -1,6 +1,11 @@
 # react-epics
 Strongly typed functions as state management using [RxJS](https://rxjs.dev/) for your [React](https://reactjs.org/) Components.
 
+[![MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/FranciscoVeracoechea/react-epics/blob/master/LICENSE)
+![Typescript](https://img.shields.io/badge/Typescript-100%25-blue)
+![GitHub last commit](https://img.shields.io/github/last-commit/FranciscoVeracoechea/react-epics?color=blue)
+[![npm version](https://badge.fury.io/js/react-epics.svg)](https://badge.fury.io/js/react-epics)
+
 ## 🚀 Epics
 
 An **Epic** is a function which takes an stream of actions (```action$```), an stream of the current state (```state$```), and an optional object of ```dependencies```, this function returns an Observable of the new state.
@@ -66,3 +71,51 @@ function Counter() {
   )
 }
 ```
+
+## 📖 Documentation
+
+### ```useEpic()```
+
+This is a [React hook](https://reactjs.org/docs/hooks-intro.html) that allow us to use RxJS Observables for state management.
+
+```ts
+type State = {...}
+type Payload = {...}
+
+type Dispatch = (action: Action<Payload>) => void;
+
+type useEpic = (
+  epic: Epic<Payload, State, Dependencies>,
+  initialState: State,
+  dependecies?: Dependencies,
+) => [State, Dispatch, Error | null]
+```
+
+The ```useEpic()``` hook, accepts an **epic** function, the initial state and an optional dependency object. It returns an array with the current state, dispatch callback and a nullable error.
+
+### ```epic()```
+
+An **Epic** is a function which takes an stream of actions (```action$```), an stream of the current state (```state$```), and an optional object of ```dependencies```, this function returns an Observable of the new state.
+
+The idea of the Epic comes from [redux-observable](https://redux-observable.js.org/), but because redux-observable is redux middleware, the observable returned from the Epic emits new actions, ```react-epics``` expects the Epic to return an observable of state updates.
+
+```ts
+type State = {...}
+type Payload = {...}
+
+type Action = {
+  type: string;
+  payload: Payload;
+};
+
+type Action$<P> = Observable<Action>;
+
+type State$ = Observable<State>;
+
+type Epic<Payload, State, Dependencies = {}> = (
+  actions$: Action$<Payload>,
+  state: State$,
+  dependecies: Dependencies,
+) => State$;
+```
+
