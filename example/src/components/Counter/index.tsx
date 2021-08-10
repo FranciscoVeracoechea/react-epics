@@ -7,7 +7,7 @@ const Test: React.FC = () => {
   const dispatch = useDispatch();
   const counter = useEpic<ICounter>('counter');
 
-  // actions
+  // actions creator
   const addToCounter = createAddToCounter(dispatch);
 
   return (

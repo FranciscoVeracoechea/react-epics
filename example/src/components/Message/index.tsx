@@ -6,8 +6,6 @@ const Message: React.FC = () => {
   const message = useEpic<IMessage>('message');
   const dispatch = useDispatch();
 
-  console.log('message => ', message);
-
   return (
     <div className="message-wrapper">
       <h2>Dynamic message</h2>

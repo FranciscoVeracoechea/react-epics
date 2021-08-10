@@ -5,9 +5,7 @@ import Counter from '../Counter';
 import Message from '../Message';
 import Cats from '../Cats';
 // store
-import store from 'src/store';
-
-
+import store from '../../store';
 
 function App() {
   return (

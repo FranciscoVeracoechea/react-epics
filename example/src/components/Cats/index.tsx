@@ -9,7 +9,7 @@ const Cats: FC = () => {
 
   const fetchNewCat = () => dispatch({ type: 'cats/fetch' });
 
-  useEffect(() => fetchNewCat, []);
+  useEffect(() => fetchNewCat(), []);
 
   if (cats.loading) {
     return (
