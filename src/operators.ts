@@ -1,14 +1,22 @@
-import { filter, map } from 'rxjs/operators';
-import { Action } from './types';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { Action$, State$, Action } from './types';
 
-export const ofType = <Payload = unknown>(actionType: string) =>
-  filter((action: Action<Payload>) => action.type === actionType);
+// export const ofType = (actionType: string) =>
+//   filter((action: Action) => action.type === actionType);
 
-export const mapAction = <T, Payload = unknown>(
+export const createOfType =
+  <S, P = any>(action$: Action$<P>, state$: State$<S>) =>
+  (actionType: string) =>
+    action$.pipe(
+      filter((action: Action<P>) => action.type === actionType),
+      withLatestFrom(state$),
+    );
+
+export const mapAction = <T>(
   actionType: string,
-  mapFn: (action: Action<Payload>) => T,
+  mapFn: (action: Action) => T,
 ) => {
-  return map<Action<Payload>, T | Action<Payload>>(action => {
+  return map<Action, T | Action>((action) => {
     return actionType === action.type ? mapFn(action) : action;
   });
 };
