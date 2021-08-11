@@ -33,6 +33,7 @@ This idea, which is based on **redux** allows us to use all RxJS awesome abiliti
 ## 🔧 Usage
 
 ```ts
+
 type ICounter = {
   counter: number;
 };
@@ -54,7 +55,8 @@ const epic: Epic<ICounter> = ({ ofType }) => {
   return merge(plus$, minus$);
 };
 
-function Counter() {
+// React Component
+const Counter: React.FC = () => {
   const dispatch = useDispatch();
   const { counter } = useEpic<ICounter>('counter'); // name of the registered epic
 
