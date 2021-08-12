@@ -1,11 +1,11 @@
 {
-  "version": "0.1.2",
+  "version": "0.2.0",
   "license": "MIT",
   "typings": "./lib/esm/index.d.ts",
-  "description": "",
+  "description": "Predictable state management solution for React applications.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FranciscoVeracoechea/react-epics.git"
+    "url": "git+https://github.com/fveracoechea/react-epics.git"
   },
   "keywords": [
     "react",
@@ -16,7 +16,7 @@
     "hooks"
   ],
   "author": "Francisco Veracoechea",
-  "homepage": "https://github.com/FranciscoVeracoechea/react-epics#readme",
+  "homepage": "https://github.com/fveracoechea/react-epics#readme",
   "engines": {
     "node": ">=12"
   },
@@ -29,7 +29,10 @@
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
   "types": "./lib/esm/index.d.ts",
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": ">=16",
+    "rxjs": ">= 7"
+  },
   "devDependencies": {
     "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
