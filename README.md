@@ -5,7 +5,6 @@ React-Epics is a valuable tool for organizing your state. Inspired by [Redux](ht
 
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/FranciscoVeracoechea/react-epics/blob/master/LICENSE)
 ![Typescript](https://img.shields.io/badge/Typescript-100%25-blue)
-![Typescript](https://img.shields.io/badge/Typescript-100%25-blue)
 ![Pull Requests](https://img.shields.io/badge/PRs-welcome-blue)
 ![GitHub last commit](https://img.shields.io/github/last-commit/FranciscoVeracoechea/react-epics?color=blue)
 [![npm version](https://img.shields.io/badge/npm%20version-0.1.2-blue)](https://badge.fury.io/js/react-epics)
@@ -32,62 +31,104 @@ This idea, which is based on **redux** allows us to use all RxJS awesome abiliti
 
 ## 🔧 Usage
 
+### 1. Create your state types: `src/types.ts`
+
 ```ts
+export type ICounter = {
+  value: number;
+};
+```
 
-type ICounter = {
-  counter: number;
+### 2. Setup your epic: `src/epics/counter.ts`
+
+```ts
+import { map } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { Epic } from 'react-epics';
+import { ICounter } from '../types';
+
+export const initialState: ICounter = {
+  value: 0,
 };
 
-const initialState: ICounter = {
-  counter: 0,
-};
-
-// counter epic
-const epic: Epic<ICounter> = ({ ofType }) => {
+export const epic: Epic<ICounter> = ({ ofType }) => {
+  // plus action
   const plus$ = ofType('counter/plus').pipe(
-    map(([action, state]) => ({ counter: state.counter + action.payload })),
+    map(([action, state]) => {
+      return { value: state.value + action.payload };
+    }),
   );
-
+  // minus action
   const minus$ = ofType('counter/minus').pipe(
-    map(([action, state]) => ({ counter: state.counter - action.payload })),
+    map(([action, state]) => {
+      return { value: state.value - action.payload };
+    }),
   );
-
+  // merge all actions into one observable
   return merge(plus$, minus$);
 };
+```
 
-// React Component
+### 3. Register your epics in the store: `src/App.tsx`
+
+```ts
+import * as React from 'react';
+import { createStore, StoreProvider } from 'react-epics';
+// epics
+import * as counter from './epics/counter';
+// components
+import Counter from './components/Counter';
+
+// store
+const store = createStore({
+  counter,
+});
+
+const App: React.FC = () => {
+  return (
+    <StoreProvider store={store}>
+      <div className="App">
+        <Counter />
+      </div>
+    </StoreProvider>
+  );
+};
+```
+
+### 4. Use it on any component: `src/components/Counter.tsx`
+
+```ts
+import * as React from 'react';
+import { useDispatch, useEpic } from 'react-epics';
+import { ICounter } from '../types.ts';
+
 const Counter: React.FC = () => {
   const dispatch = useDispatch();
-  const { counter } = useEpic<ICounter>('counter'); // name of the registered epic
+  const { value } = useEpic<ICounter>('counter'); // name of the registered epic
 
   // actions
-  const plus = () => dispatch({
-    type: 'counter/plus',
-    payload:  1,
-  });
-  const minus = () => dispatch({
-    type: 'counter/minus',
-    payload: 1,
-  });
+  const plus = () =>
+    dispatch({
+      type: 'counter/plus',
+      payload: 1,
+    });
+  const minus = () =>
+    dispatch({
+      type: 'counter/minus',
+      payload: 1,
+    });
 
   return (
     <div className="counter-wrapper">
-      <h2>Couter: {counter}</h2>
+      <h2>Couter: {value}</h2>
       <button onClick={plus}>+</button>
-      <button
-        onClick={minus}>
-        -
-      </button>
-      <br />
-      <hr />
+      <button onClick={minus}>-</button>
     </div>
   );
-}
+};
 ```
 
-## 📖 Documentation
-
-### This documentation is depcrecated!!!
+## 📖 Documentation - Deprecated!!!
 
 ### `useEpic()`
 
